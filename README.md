@@ -1,2 +1,2 @@
-# RoboticsProject_Leggy
+# Quadruped
 My robot
