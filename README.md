@@ -8,4 +8,4 @@ the Quadruped starts with the basic files Standing.json, Lying.json, Waving1 and
 Once you have set states for the Quadruped, you can then program a button to run a command. there is a demonstration caled wave() in Multi_StateCommands. you can load and send states to the robot in sequence and delay them by fractions of a second to ensure the motors get to their states. by loading each state the motors will attempt to reach that position and wait for their next command to once again move.
 
 To create a command you must create a function in Multi_StateCommands, from there in the QuadrupedGUI you can create a button that calls that function, then you can have a fixed set of commands you can call from the GUI.
-![](https://github.com/EndurianEX/Quadruped/edit/main/VID20241122120731.gif)
+![](https://github.com/EndurianEX/Quadruped/blob/main/VID20241122120731.gif)
