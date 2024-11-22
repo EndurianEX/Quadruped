@@ -5,33 +5,36 @@ import time
 
 class SerialCommunicator:
     """Handles serial communication with the Pico."""
-    
+
+
+    # port may change depending on PC used, baud_rate should remain the same to ensure data is being sent
     def __init__(self, port='COM6', baud_rate=115200):
         self.serialPath = serial.Serial(port, baud_rate)
 
+    # send_command gathers a string from elsewhere and encodes it, sending it through the serialpath set above
     def send_command(self, command):
         sentData = command
         x = sentData.encode()
         self.serialPath.write(x)
 
 class Multi_StateCommands:
-
-    def wave(self):
+    """Contains all Multi-State commands"""
+    
+    def wave(self):    #Causes the robot to wave and end in the standing position
         QuadrupedGUI.load_state(self, "Waving1.json")
         QuadrupedGUI.update_pico(self)
-        time.sleep(1)
+        time.sleep(0.2)
         QuadrupedGUI.load_state(self, "Waving2.json")
         QuadrupedGUI.update_pico(self)
-        time.sleep(1)
+        time.sleep(0.2)
         QuadrupedGUI.load_state(self, "Waving1.json")
         QuadrupedGUI.update_pico(self)
-        time.sleep(1)
+        time.sleep(0.2)
         QuadrupedGUI.load_state(self, "Waving2.json")
         QuadrupedGUI.update_pico(self)
-        time.sleep(1)
+        time.sleep(0.3)
         QuadrupedGUI.load_state(self, "Standing.json")
         QuadrupedGUI.update_pico(self)
-        time.sleep(1)
 
 class QuadrupedGUI:
     """Main GUI class for controlling the quadruped robot."""
@@ -72,6 +75,7 @@ class QuadrupedGUI:
 
 
     def update_pico(self):
+        """ reads loaded data to send a non-encoded string to the send_command function """
         sentData = (f"{self.forwardRightHip.get()},{self.forwardRightFoot.get()},{self.forwardLeftHip.get()},{self.forwardLeftFoot.get()},{self.backwardRightHip.get()},{self.backwardRightFoot.get()},{self.backwardLeftHip.get()},{self.backwardLeftFoot.get()}\n")
 
         sc = SerialCommunicator()
@@ -86,7 +90,7 @@ class QuadrupedGUI:
 
 
     def load_state(self, fileName):
-        """Load the last saved state of the robot."""
+        """Load the recorded state of the robot."""
         print("loaded")
         index = 0
         with open(fileName, "r") as file:
@@ -104,6 +108,7 @@ class QuadrupedGUI:
 
 
 if __name__ == "__main__":
+    """Run the program and launch the GUI"""
     root = tk.Tk()
     app = QuadrupedGUI(root)
     app.create_gui()
